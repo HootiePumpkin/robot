@@ -43,7 +43,7 @@ def main():
 		move_as(arm.base, char)
 
 		if char == 'r':
-			reset_arm(base)
+			reset_arm(arm.base)
 
 			for char in path:
 				move_as(base, char)

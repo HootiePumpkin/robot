@@ -4,6 +4,7 @@ import time
 
 import oneservocontrol as controller
 from reset_arm import reset_arm
+from pynput import keyboard
 
 sys.dont_write_bytecode = True
 
@@ -23,54 +24,20 @@ def main():
 	arm = controller.Arm()
 	arm.reset()
 	
-	path = []
-	while True:
-	# for char in path:
-		char = readchar.readchar()
-		hex_char = hex(ord(char))
-	
-		if hex_char == '0x3':
-			print("path followed: {}".format(path))
-			
-			print("received {} in hex, exiting".format(hex_char))
-
+	def on_press(key):
+		nkey = str(key)
+		if nkey[1:2] == 'a':
+			move_as(base, nkey[1:2])
+		if nkey[1:2] == 'd':
+			move_as(base, nkey[1:2])
+	def on_release(key):
+		nkey = str(key)
+		if nkey[1:2] == 'f':
 			sys.exit()
-
-		print(char)
-
-		path.append(char)
-
-		move_as(base, char)
-
-		if char == 'r':
-			reset_arm(base)
-
-			for char in path:
-				move_as(base, char)
-
-			path = []
-		elif char == 'v':
-			# filename = 'path_' + str(datetime.datetime.now()).replace(' ', '_')[:-3] + '.txt'
-			filename = 'path.txt'
 			
-			with open(filename, 'w') as f:
-				f.write(''.join(path)[:-1])
-				
-		elif char == 'c':
-			filename = 'path.txt'
-			
-			with open(filename, 'r') as f:
-				path = f.readlines()
-				print(path)
-				
-				reset_arm(base)
-				
-				for char in path[0]:
-					move_as(base, char)
-
-				path = []
-
-
+	with keyboard.Listener(on_press = on_press, on_release = on_release) as listener:
+		listener.join()
+	
 if __name__ == '__main__':
 	main()
 	

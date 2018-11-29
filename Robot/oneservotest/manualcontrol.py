@@ -40,13 +40,13 @@ def main():
 
 		path.append(char)
 
-		move_as(base, char)
+		move_as(Arm.base, char)
 
 		if char == 'r':
-			reset_arm(base)
+			reset_arm(Arm.base)
 
 			for char in path:
-				move_as(base, char)
+				move_as(Arm.base, char)
 
 			path = []
 		elif char == 'v':
@@ -63,10 +63,10 @@ def main():
 				path = f.readlines()
 				print(path)
 				
-				reset_arm(base)
+				reset_arm(Arm.base)
 				
 				for char in path[0]:
-					move_as(base, char)
+					move_as(Arm.base, char)
 
 				path = []
 

@@ -7,14 +7,14 @@ from reset_arm import reset_arm
 
 sys.dont_write_bytecode = True
 
-def move_as(Arm.base, char):
+def move_as(base, char):
 	speed = 100
 	if char == 's':
-		Arm.base.set_position_res(Arm.base.position - 1, speed)
-		print (Arm.base.position)
+		base.set_position_res(base.position - 1, speed)
+		print (base.position)
 	elif char == 'f':
-		Arm.base.set_position_res(Arm.base.position + 1, speed)
-		print (Arm.base.position)
+		base.set_position_res(base.position + 1, speed)
+		print (base.position)
 		
 	else:
 		pass
@@ -40,13 +40,13 @@ def main():
 
 		path.append(char)
 
-		move_as(Arm.base, char)
+		move_as(arm.base, char)
 
 		if char == 'r':
-			reset_arm(Arm.base)
+			reset_arm(base)
 
 			for char in path:
-				move_as(Arm.base, char)
+				move_as(base, char)
 
 			path = []
 		elif char == 'v':
@@ -63,10 +63,10 @@ def main():
 				path = f.readlines()
 				print(path)
 				
-				reset_arm(Arm.base)
+				reset_arm(base)
 				
 				for char in path[0]:
-					move_as(Arm.base, char)
+					move_as(base, char)
 
 				path = []
 

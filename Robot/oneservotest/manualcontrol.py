@@ -7,14 +7,14 @@ from reset_arm import reset_arm
 
 sys.dont_write_bytecode = True
 
-def move_as(base, char):
+def move_as(Arm.base, char):
 	speed = 100
 	if char == 's':
-		base.set_position_res(base.position - 1, speed)
-		print (base.position)
+		Arm.base.set_position_res(Arm.base.position - 1, speed)
+		print (Arm.base.position)
 	elif char == 'f':
-		base.set_position_res(base.position + 1, speed)
-		print (base.position)
+		Arm.base.set_position_res(Arm.base.position + 1, speed)
+		print (Arm.base.position)
 		
 	else:
 		pass

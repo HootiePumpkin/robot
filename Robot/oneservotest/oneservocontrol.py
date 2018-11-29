@@ -72,7 +72,7 @@ class Base(object):
 	min_pulse_width = 125
 	max_pulse_width = 595
 
-	def __init__(self, channel=0, debug=False, turn = 0):
+	def __init__(self, channel, debug=False, turn = 0):
 		"""
 		initialize the object
 		"""

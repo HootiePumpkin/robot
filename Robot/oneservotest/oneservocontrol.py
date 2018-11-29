@@ -61,7 +61,9 @@ class MG996R(object):
 			return
 
 		pulse = int(self.min_pulse_width + (percentage / 100) * (self.max_pulse_width - self.min_pulse_width))
-		self.pwm.ChangeDutyCycle(pulse)
+		angl = int((180 * pulse)/(self.max_pulse_width - self.min_pulse_width))
+		duty = angl / 18 + 2
+		self.pwm.ChangeDutyCycle(duty)
 
 class Base(object):
 	"""

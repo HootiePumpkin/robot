@@ -46,7 +46,7 @@ def main():
 			reset_arm(arm.base)
 
 			for char in path:
-				move_as(base, char)
+				move_as(arm.base, char)
 
 			path = []
 		elif char == 'v':
@@ -63,10 +63,10 @@ def main():
 				path = f.readlines()
 				print(path)
 				
-				reset_arm(base)
+				reset_arm(arm.base)
 				
 				for char in path[0]:
-					move_as(base, char)
+					move_as(arm.base, char)
 
 				path = []
 

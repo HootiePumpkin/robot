@@ -65,7 +65,7 @@ def main():
 				
 				reset_arm(arm.base)
 				
-				for char in path[0]:
+				for char in path:
 					move_as(arm.base, char)
 
 				path = []

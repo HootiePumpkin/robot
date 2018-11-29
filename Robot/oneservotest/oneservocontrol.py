@@ -67,6 +67,7 @@ class MG996R(object):
 		print(angl)
 		print(pulse)
 		print(self.channel)
+		GPIO.output(03, True)
 		self.pwm.ChangeDutyCycle(duty)
 		
 

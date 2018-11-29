@@ -12,7 +12,7 @@ sys.dont_write_bytecode = True
 BASE_DEF_PER = 58
 
 channels = {
-		"Base:": 3
+		"Base": 3
 		}
 positions = {
 	"Max_Base": 100,

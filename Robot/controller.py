@@ -7,6 +7,7 @@ SainSmart 5-Axis Control Palletizing Robot Arm controller
 In referring to rotation, "right" means clockwise, and "left" means counter-clockwise.
 """
 
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -129,9 +130,10 @@ class DS3218(object):
 		"""
 		initialize a servo object
 		"""
-		GPIO.setup(channel = channel, GPIO.OUT)
+		GPIO.setup(channel, GPIO.OUT)
 
 		self.pwm = GPIO.PWM(channel, 50)
+		self.pwm.start(0)
 
 		self.channel = channel
 
@@ -145,7 +147,9 @@ class DS3218(object):
 			return
 
 		pulse = int(self.min_pulse_width + (percentage / 100) * (self.max_pulse_width - self.min_pulse_width))
-		self.pwm.ChangeDutyCycle(pulse)
+		duty = int(angl / 18 + 2)
+		GPIO.output(self.channel, True)
+		self.pwm.ChangeDutyCycle(duty)
 
 
 class MG996R(object):
@@ -162,13 +166,14 @@ class MG996R(object):
 	deadband width: 1 usec
 	pulse width range: ? to ? usec
 	"""
-	def __init__(self, channel=0, frequency=50, min_pulse_width=500, max_pulse_width=2500, debug=False):
+	def __init__(self, channel, frequency=50, min_pulse_width=500, max_pulse_width=2500, debug=False):
 		"""
 		initialize a servo object
 		"""
-		GPIO.setup(channel =  channel, GPIO.OUT)
+		GPIO.setup(channel, GPIO.OUT)
 
 		self.pwm = GPIO.PWM(channel, 50)
+		self.pwm.start(0)
 
 		self.channel = channel
 
@@ -182,8 +187,10 @@ class MG996R(object):
 			return
 
 		pulse = int(self.min_pulse_width + (percentage / 100) * (self.max_pulse_width - self.min_pulse_width))
-		self.pwm.ChangeDutyCycle(pulse)
-
+		angl = int((180 * pulse)/(self.max_pulse_width - self.min_pulse_width))
+		duty = int(angl / 18 + 2)
+		GPIO.output(self.channel, True)
+		self.pwm.ChangeDutyCycle(duty)
 
 class Base(object):
 	"""
@@ -192,11 +199,11 @@ class Base(object):
 	min_pulse_width = 125
 	max_pulse_width = 595
 
-	def __init__(self, channel=0, debug=False, turn = 0):
+	def __init__(self, channel, debug=False, turn = 0):
 		"""
 		initialize the object
 		"""
-		self.mg996r = MG996R(channel=channel, min_pulse_width=Base.min_pulse_width, max_pulse_width=Base.max_pulse_width)
+		self.mg996r = MG996R(channel, min_pulse_width=Base.min_pulse_width, max_pulse_width=Base.max_pulse_width)
 		self.turn = turn
 
 	def set_position(self, percentage, speed=75):
@@ -245,11 +252,11 @@ class Shoulder(object):
 	min_pulse_width = 10
 	max_pulse_width = 370
 
-	def __init__(self, channel=0, debug=False, turn = 0):
+	def __init__(self, channel, debug=False, turn = 0):
 		"""
 		initialize the object
 		"""
-		self.ds3218 = DS3218(channel=channel, min_pulse_width=Shoulder.min_pulse_width, max_pulse_width=Shoulder.max_pulse_width)
+		self.ds3218 = DS3218(channel, min_pulse_width=Shoulder.min_pulse_width, max_pulse_width=Shoulder.max_pulse_width)
 		self.turn = turn
 		self.position = None
 		self.angle = None
@@ -310,11 +317,11 @@ class Elbow(object):
 	min_pulse_width = 127
 	max_pulse_width = 608
 
-	def __init__(self, channel=0, debug=False, turn = 0):
+	def __init__(self, channel, debug=False, turn = 0):
 		"""
 		initialize the object
 		"""
-		self.mg996r = MG996R(channel=channel, min_pulse_width=Elbow.min_pulse_width, max_pulse_width=Elbow.max_pulse_width)
+		self.mg996r = MG996R(channel, min_pulse_width=Elbow.min_pulse_width, max_pulse_width=Elbow.max_pulse_width)
 		self.turn = turn
 		self.position = None
 		self.angle = None
@@ -372,11 +379,11 @@ class Wrist(object):
 	min_pulse_width = 150
 	max_pulse_width = 600
 
-	def __init__(self, channel=0, debug=False, turn = 0):
+	def __init__(self, channel, debug=False, turn = 0):
 		"""
 		initialize the object
 		"""
-		self.mg996r = MG996R(channel=channel, min_pulse_width=Wrist.min_pulse_width, max_pulse_width=Wrist.max_pulse_width)
+		self.mg996r = MG996R(channel, min_pulse_width=Wrist.min_pulse_width, max_pulse_width=Wrist.max_pulse_width)
 		self.turn = turn
 		
 	def set_position(self, percentage, speed=75):
@@ -397,11 +404,11 @@ class Gripper(object):
 	min_pulse_width = 420
 	max_pulse_width = 570
 
-	def __init__(self, channel=0, debug=False, turn = 0):
+	def __init__(self, channel, debug=False, turn = 0):
 		"""
 		initialize the object
 		"""
-		self.mg996r = MG996R(channel=channel, min_pulse_width=Gripper.min_pulse_width, max_pulse_width=Gripper.max_pulse_width)
+		self.mg996r = MG996R(channel, min_pulse_width=Gripper.min_pulse_width, max_pulse_width=Gripper.max_pulse_width)
 		self.turn = turn
 		
 	def set_position(self, percentage, speed=75):

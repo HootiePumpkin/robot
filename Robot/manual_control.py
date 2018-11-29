@@ -11,7 +11,7 @@ import readchar
 import sys
 import time
 
-import SainSmart_controller as controller
+import controller as controller
 from reset_arm import reset_arm
 from test_arm import test_arm
 
@@ -83,13 +83,13 @@ def main():
 
         path.append(char)
 
-        move_as(base, shoulder, elbow, wrist, gripper, char)
+        move_as(arm.base, arm.shoulder, arm.elbow, warm.rist, arm.gripper, char)
 
         if char == 'r':
-            reset_arm(base, shoulder, elbow, wrist, gripper)
+            reset_arm(arm.base, arm.shoulder, arm.elbow, warm.rist, arm.gripper)
 
             for char in path:
-                move_as(base, shoulder, elbow, wrist, gripper, char)
+                move_as(arm.base, arm.shoulder, arm.elbow, warm.rist, arm.gripper, char)
 
             path = []
         elif char == 'v':
@@ -106,10 +106,10 @@ def main():
                 path = f.readlines()
                 print(path)
 
-                reset_arm(base, shoulder, elbow, wrist, gripper)
+                reset_arm(arm.base, arm.shoulder, arm.elbow, warm.rist, arm.gripper)
 
                 for char in path[0]:
-                    move_as(base, shoulder, elbow, wrist, gripper, char)
+                    move_as(arm.base, arm.shoulder, arm.elbow, warm.rist, arm.gripper, char)
 
                 path = []
 

@@ -64,11 +64,7 @@ class MG996R(object):
 		pulse = int(self.min_pulse_width + (percentage / 100) * (self.max_pulse_width - self.min_pulse_width))
 		angl = int((180 * pulse)/(self.max_pulse_width - self.min_pulse_width))
 		duty = int(angl / 18 + 2)
-		print(duty)
-		print(angl)
-		print(pulse)
-		print(self.channel)
-		GPIO.output(03, True)
+		GPIO.output(self.channel, True)
 		self.pwm.ChangeDutyCycle(duty)
 		
 

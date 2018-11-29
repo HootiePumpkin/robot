@@ -16,7 +16,7 @@ from SainSmart_controller import channels
 
 sys.dont_write_bytecode = True
 
-
+"""
 def reset_arm(base, shoulder, elbow, wrist, gripper):
     # extend to 45 degrees
     base.set_position_res(percentage = 58, speed = 75)
@@ -25,7 +25,7 @@ def reset_arm(base, shoulder, elbow, wrist, gripper):
     wrist.set_position(90, speed = 75)
     gripper.set_position(50, speed = 75)
     time.sleep(0.1)
-
+"""
 
 def main():
     

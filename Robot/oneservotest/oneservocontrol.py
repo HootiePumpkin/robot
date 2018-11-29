@@ -41,11 +41,11 @@ class MG996R(object):
 	deadband width: 1 usec
 	pulse width range: ? to ? usec
 	"""
-	def __init__(self, channel=0, frequency=50, min_pulse_width=500, max_pulse_width=2500, debug=False):
+	def __init__(self, channel, frequency=50, min_pulse_width=500, max_pulse_width=2500, debug=False):
 		"""
 		initialize a servo object
 		"""
-		GPIO.setup(channel =  channel, GPIO.OUT)
+		GPIO.setup(channel, GPIO.OUT)
 
 		self.pwm = GPIO.PWM(channel, 50)
 
@@ -74,7 +74,7 @@ class Base(object):
 		"""
 		initialize the object
 		"""
-		self.mg996r = MG996R(channel=channel, min_pulse_width=Base.min_pulse_width, max_pulse_width=Base.max_pulse_width)
+		self.mg996r = MG996R(channel, min_pulse_width=Base.min_pulse_width, max_pulse_width=Base.max_pulse_width)
 		self.turn = turn
 
 	def set_position(self, percentage, speed=75):

@@ -48,6 +48,7 @@ class MG996R(object):
 		GPIO.setup(channel, GPIO.OUT)
 
 		self.pwm = GPIO.PWM(channel, 50)
+		self.pwm.start(0)
 
 		self.channel = channel
 

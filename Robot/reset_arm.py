@@ -11,8 +11,7 @@ import readchar
 import sys
 import time
 
-import SainSmart_controller as controller
-from SainSmart_controller import channels
+import controller as controller
 
 sys.dont_write_bytecode = True
 

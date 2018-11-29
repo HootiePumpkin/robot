@@ -4,7 +4,7 @@ import math
 
 import RPi.GPIO as GPIO
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 sys.dont_write_bytecode = True
@@ -22,7 +22,7 @@ positions = {
 class Arm (object):
 	
 	def __init__(self):
-		self.base  = Base(channel = channels["Base"])
+		self.base  = Base(channels["Base"])
 		
 	def reset(self):
 		self.base.set_position_res(BASE_DEF_PER, speed = 75)
@@ -63,6 +63,9 @@ class MG996R(object):
 		pulse = int(self.min_pulse_width + (percentage / 100) * (self.max_pulse_width - self.min_pulse_width))
 		angl = int((180 * pulse)/(self.max_pulse_width - self.min_pulse_width))
 		duty = angl / 18 + 2
+		print(duty)
+		print(angl)
+		print(pulse)
 		self.pwm.ChangeDutyCycle(duty)
 
 class Base(object):
